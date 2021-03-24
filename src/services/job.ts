@@ -43,7 +43,9 @@ const convertToJobModel = (object: any): IJob => {
     description: object.description,
     maxDate: new Date(object.maxDate),
     executed: false,
-    estimatedTime: parseInt(object.estimatedTime.split(" ")[0]) || 0,
+    estimatedTime:
+      parseInt(object.estimatedTime) ||
+      parseInt(object.estimatedTime.split(" ")[0]),
   };
 };
 
