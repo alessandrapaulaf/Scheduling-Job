@@ -1,26 +1,15 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+
+import { executeJobs } from "./services/job";
+import jobs from "./data/jobs.json";
+
+const executionWindow = {
+  init: "2019-11-10 09:00:00",
+  end: "2019-11-11 12:00:00",
+};
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return <div>{JSON.stringify(executeJobs(jobs, executionWindow))}</div>;
 }
 
 export default App;
