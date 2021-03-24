@@ -1,7 +1,11 @@
 import IJob from "../models/job";
 import IWindow from "../models/window";
 
-import { getCounterProcesses, filterAndSortbyDate } from "../helpers/jobs";
+import {
+  getCounterProcesses,
+  filterAndSortbyDate,
+  convertToJobModel,
+} from "../helpers/jobs";
 
 const executeJobs = (jobs: any, window: IWindow, timeToExecute: number) => {
   //Lista final de jobs
@@ -11,8 +15,13 @@ const executeJobs = (jobs: any, window: IWindow, timeToExecute: number) => {
   const windowInit = new Date(window.init);
   const windowEnd = new Date(window.end);
 
+  // Converte os jobs do tipo objeto simples para o tipo Job
+  const convertedJobs = jobs.map((job: IJob) => convertToJobModel(job));
+
   //Filtra os jobs que estão dentro da janela de execução e ordena pela data de término do job
-  const eligibleJobs = filterAndSortbyDate(jobs, windowInit, windowEnd);
+  //Obs: O job pode estar fora da janela somente se sua data máxima for antes do início da janela,
+  //pois ele não tem data de início, correto?
+  const eligibleJobs = filterAndSortbyDate(convertedJobs, windowInit);
 
   // Conta a quantidade de processos a serem executados, levando em consideração a soma
   // do valor de excução de cada job e o tempo de limite definido

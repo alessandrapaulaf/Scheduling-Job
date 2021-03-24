@@ -6,15 +6,15 @@ import {
   filterAndSortbyDate,
 } from "../helpers/jobs";
 
-it("Testa da conversão do objeto recebido em string em um objeto do tipo Job", () => {
-  const valuetoTest = {
+it("Testa a conversão do objeto recebido em string em um objeto do tipo Job", () => {
+  const valueToTest = {
     id: 1,
     description: "Importação de arquivos de fundos",
     maxDate: "2019-11-10 12:00:00",
     estimatedTime: "2 horas",
   };
 
-  const result = convertToJobModel(valuetoTest);
+  const result = convertToJobModel(valueToTest);
   const expected = {
     id: 1,
     description: "Importação de arquivos de fundos",
@@ -54,7 +54,7 @@ it("Teste da quantidade de processos que precisam ser executados levando em cons
   expect(result).toBe(expected);
 });
 
-it("Teste do filtra pela janela de execução e ordena com 2 jobs fora da janela", () => {
+it("Teste do filtro de jobs pela janela de execução e ordenação, com 2 jobs fora da janela", () => {
   const value = [
     {
       id: 1,
@@ -77,7 +77,7 @@ it("Teste do filtra pela janela de execução e ordena com 2 jobs fora da janela
     {
       id: 4,
       description: "Importação de dados de integração",
-      maxDate: new Date("2019-11-11 15:01:00"),
+      maxDate: new Date("2019-11-09 15:01:00"),
       estimatedTime: 6,
     },
   ];
@@ -97,16 +97,12 @@ it("Teste do filtra pela janela de execução e ordena com 2 jobs fora da janela
     },
   ];
 
-  const result = filterAndSortbyDate(
-    value,
-    new Date("2019-11-10 10:00:00"),
-    new Date("2019-11-11 15:00:00")
-  );
+  const result = filterAndSortbyDate(value, new Date("2019-11-10 10:00:00"));
 
   expect(result).toStrictEqual(expected);
 });
 
-it("Testa o retorno de processos não executados dentro to tempo limite com 2 processos que já foram executados e 1 que ultrapassa o limite", () => {
+it("Teste do retorno de processos não executados dentro to tempo limite, com 2 processos que já foram executados e 1 que ultrapassa o limite", () => {
   const value = [
     {
       id: 1,
@@ -163,7 +159,7 @@ it("Testa o retorno de processos não executados dentro to tempo limite com 2 pr
   expect(result).toStrictEqual(expected);
 });
 
-it("Testa toda o funcao de executar jobs, de acordo com o exemplo de massa de dados enviado no desafio", () => {
+it("Teste de toda a funcao de executar jobs, de acordo com o exemplo de massa de dados enviado no desafio", () => {
   const values = [
     {
       id: 1,

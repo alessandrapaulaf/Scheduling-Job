@@ -1,8 +1,8 @@
 import IJob from "../../models/job";
 
-const filterAndSortbyDate = (jobs: IJob[], init: Date, end: Date) => {
+const filterAndSortbyDate = (jobs: IJob[], init: Date) => {
   return jobs
-    .filter((job: IJob) => job.maxDate >= init && job.maxDate <= end)
+    .filter((job: IJob) => job.maxDate >= init)
     .sort((a, b) => {
       return <any>a.maxDate - <any>b.maxDate;
     });
@@ -28,4 +28,23 @@ const getCounterProcesses = (jobs: IJob[], timeLimitToProcess: number) => {
   );
 };
 
-export { filterAndSortbyDate, convertToJobModel, getCounterProcesses };
+const getOutsideWindowExecute = (jobs: any[], init: string) => {
+  return jobs.filter((job) => job.maxDate <= init);
+};
+
+const getOutsideLimitExecution = (jobs: any[], limitTime: number) => {
+  return jobs.filter((job) => {
+    const estimated =
+      parseInt(job.estimatedTime) || parseInt(job.estimatedTime.split(" ")[0]);
+
+    return estimated > limitTime;
+  });
+};
+
+export {
+  filterAndSortbyDate,
+  convertToJobModel,
+  getCounterProcesses,
+  getOutsideWindowExecute,
+  getOutsideLimitExecution,
+};
