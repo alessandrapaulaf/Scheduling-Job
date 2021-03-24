@@ -9,7 +9,7 @@ const executionWindow = {
 };
 
 function App() {
-  return <div>{JSON.stringify(executeJobs(jobs, executionWindow))}</div>;
+  return <div>{JSON.stringify(executeJobs(jobs, executionWindow, 8))}</div>;
 }
 
 export default App;
