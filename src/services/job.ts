@@ -13,7 +13,6 @@ const executeJobs = (jobs: any, window: IWindow, timeToExecute: number) => {
 
   //Janela de execução: início e fim
   const windowInit = new Date(window.init);
-  const windowEnd = new Date(window.end);
 
   // Converte os jobs do tipo objeto simples para o tipo Job
   const convertedJobs = jobs.map((job: IJob) => convertToJobModel(job));

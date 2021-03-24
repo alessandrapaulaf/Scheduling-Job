@@ -24,7 +24,7 @@ const TableJobs: React.FC<TableProps> = ({ jobs }) => {
           jobs.map((job) => (
             <tr>
               <td>{job.id}</td>
-              <td>{job.description}</td>
+              <td className="desc">{job.description}</td>
               <td>{job.maxDate.toLocaleString("pt-BR")}</td>
               <td>{job.estimatedTime}</td>
             </tr>

@@ -4,7 +4,7 @@ const filterAndSortbyDate = (jobs: IJob[], init: Date) => {
   return jobs
     .filter((job: IJob) => job.maxDate >= init)
     .sort((a, b) => {
-      return <any>a.maxDate - <any>b.maxDate;
+      return (a.maxDate as any) - (b.maxDate as any);
     });
 };
 

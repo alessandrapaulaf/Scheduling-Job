@@ -1,0 +1,12 @@
+html {
+  font-family: "Lato", sans-serif;
+  height: 100%;
+}
+body {
+  margin: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(65, 131, 155, 1) 0%,
+    rgba(51, 98, 123, 1) 100%
+  );
+}
