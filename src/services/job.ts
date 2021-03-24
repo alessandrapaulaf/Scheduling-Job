@@ -1,71 +1,43 @@
 import IJob from "../models/job";
 import IWindow from "../models/window";
 
-const executeJobs = (jobs: any, window: IWindow) => {
-  const toExecute = [];
+import { getCounterProcesses, filterAndSortbyDate } from "../helpers/jobs";
 
-  //Tempo máximo de execução de cada Job
-  const timeToExecute = 8;
+const executeJobs = (jobs: any, window: IWindow, timeToExecute: number) => {
+  //Lista final de jobs
+  const toExecute = [];
 
   //Janela de execução: início e fim
   const windowInit = new Date(window.init);
   const windowEnd = new Date(window.end);
 
-  const convertedJobs = jobs.map((job: any) => {
-    return convertToJobModel(job);
-  });
-  const eligibleJobs = filterAndSortbyDate(
-    convertedJobs,
-    windowInit,
-    windowEnd
-  );
-  const counterProcess = getCounterProcesses(eligibleJobs);
+  //Filtra os jobs que estão dentro da janela de execução e ordena pela data de término do job
+  const eligibleJobs = filterAndSortbyDate(jobs, windowInit, windowEnd);
 
+  // Conta a quantidade de processos a serem executados, levando em consideração a soma
+  // do valor de excução de cada job e o tempo de limite definido
+  const counterProcess = getCounterProcesses(eligibleJobs, timeToExecute);
+
+  // Obtém os jobs de acordo com a quantidade de processos.
   for (let i = 0; i < counterProcess; i++) {
-    const result = getExecutionQueue(eligibleJobs, timeToExecute);
-    toExecute.push(result);
+    toExecute.push(getExecutionQueue(eligibleJobs, timeToExecute));
   }
 
   return toExecute;
 };
 
-const filterAndSortbyDate = (jobs: IJob[], init: Date, end: Date) => {
-  return jobs
-    .filter((job: IJob) => job.maxDate >= init && job.maxDate <= end)
-    .sort((a, b) => {
-      return <any>a.maxDate - <any>b.maxDate;
-    });
-};
-
-const convertToJobModel = (object: any): IJob => {
-  return {
-    id: object.id,
-    description: object.description,
-    maxDate: new Date(object.maxDate),
-    executed: false,
-    estimatedTime:
-      parseInt(object.estimatedTime) ||
-      parseInt(object.estimatedTime.split(" ")[0]),
-  };
-};
-
-const getCounterProcesses = (jobs: IJob[]) => {
-  return Math.ceil(
-    jobs.reduce((total: number, job: IJob) => {
-      return total + job.estimatedTime;
-    }, 0) / 8
-  );
-};
-
 const getExecutionQueue = (jobs: IJob[], limit: number) => {
   const resultProcesses = [];
   let sum = 0;
-  let filteredJobs = jobs.filter((job) => job.executed === false);
+  let filteredJobs = jobs.filter((job) => !job.executed);
 
+  //Os jobs que ainda não foram executados passam pela validação de tempo limite
+  //e caso a validação seja positiva a variável "sum" incrementa seu valor estimado
+  //para validar os próximos jobs
   for (let i = 0; i < filteredJobs.length; i++) {
     if (sum + filteredJobs[i].estimatedTime <= limit) {
       sum += filteredJobs[i].estimatedTime;
-      resultProcesses.push(filteredJobs[i].id);
+      resultProcesses.push(filteredJobs[i]);
       filteredJobs[i].executed = true;
     }
   }
@@ -73,10 +45,4 @@ const getExecutionQueue = (jobs: IJob[], limit: number) => {
   return resultProcesses;
 };
 
-export {
-  executeJobs,
-  getCounterProcesses,
-  getExecutionQueue,
-  filterAndSortbyDate,
-  convertToJobModel,
-};
+export { executeJobs, getExecutionQueue };

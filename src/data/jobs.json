@@ -3,7 +3,7 @@
     "id": 1,
     "description": "Importação de arquivos de fundos",
     "maxDate": "2019-11-10 12:00:00",
-    "estimatedTime": 8
+    "estimatedTime": 2
   },
   {
     "id": 2,
@@ -19,14 +19,14 @@
   },
   {
     "id": 4,
-    "description": "Importação teste fora da janela",
+    "description": "Importação teste",
     "maxDate": "2019-11-11 10:00:00",
     "estimatedTime": 6
   },
   {
     "id": 5,
-    "description": "Importação teste fora da janela",
+    "description": "Importação teste",
     "maxDate": "2019-11-11 11:00:00",
-    "estimatedTime": 3
+    "estimatedTime": "3"
   }
 ]
