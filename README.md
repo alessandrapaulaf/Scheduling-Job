@@ -9,10 +9,10 @@ Nesse repositório contém a resolução do desafio Scheduling jobs, onde é dis
 
 Regras a serem seguidas:
 
-[x] Cada array do conjunto representa uma lista de Jobs a serem executados em sequência;
-[x] Cada array deve conter jobs que sejam executados em, no máximo, 8h;
-[x] Deve ser respeitada a data máxima de conclusão do Job;
-[x] Todos os Jobs devem ser executados dentro da janela de execução (data início e fim).
+- [x] Cada array do conjunto representa uma lista de Jobs a serem executados em sequência;
+- [x] Cada array deve conter jobs que sejam executados em, no máximo, 8h;
+- [x] Deve ser respeitada a data máxima de conclusão do Job;
+- [x] Todos os Jobs devem ser executados dentro da janela de execução (data início e fim).
 
 Para instalar as dependências:
 
