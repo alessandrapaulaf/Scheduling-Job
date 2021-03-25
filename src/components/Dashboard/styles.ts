@@ -78,12 +78,34 @@ export const TableContent = styled.div`
   padding: 5px;
   width: 100%;
 
-  h2 {
-    margin-bottom: 50px;
-  }
-
   @media screen and (min-width: 819px) {
     padding: 10px 30px;
+  }
+`;
+
+export const HeaderJobs = styled.div`
+  margin-bottom: 20px;
+
+  .window-exec {
+    display: block;
+    margin-top: 20px;
+
+    span {
+      display: block;
+
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.4);
+    }
+  }
+
+  @media screen and (min-width: 1174px) {
+    display: flex;
+    justify-content: space-between;
+
+    .window-exec {
+      margin-top: 0;
+    }
   }
 `;
 

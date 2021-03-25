@@ -3,7 +3,7 @@ import IJob from "../../models/job";
 
 import ProgressBar from "../ProgressBar";
 import TableJobs from "../TableJobs";
-import dataJobs from "../../data/jobs.json";
+import { jobs } from "../../data/jobs";
 
 import { executeJobs } from "../../services/job";
 import {
@@ -18,6 +18,7 @@ import {
   TableContent,
   ProgressCard,
   TablesContainer,
+  HeaderJobs,
 } from "./styles";
 
 const windowExecute = {
@@ -34,7 +35,7 @@ const Dashboard: React.FC = () => {
   const [superiorTime, setSuperiorTime] = useState<number>(0);
 
   const getQueues = async () => {
-    const result = await executeJobs(dataJobs, windowExecute, limitExecution);
+    const result = await executeJobs(jobs, windowExecute, limitExecution);
 
     setJobsExecute(
       result.reduce((total: number, queue: IJob[]) => {
@@ -43,10 +44,10 @@ const Dashboard: React.FC = () => {
     );
 
     setJobsOutsideWindow(
-      getOutsideWindowExecute(dataJobs, windowExecute.init).length
+      getOutsideWindowExecute(jobs, windowExecute.init).length
     );
 
-    setSuperiorTime(getOutsideLimitExecution(dataJobs, limitExecution).length);
+    setSuperiorTime(getOutsideLimitExecution(jobs, limitExecution).length);
 
     setQueues(result);
   };
@@ -59,11 +60,12 @@ const Dashboard: React.FC = () => {
     <Container>
       <Card>
         <ProgressContent>
-          <h2>{`Total de Jobs: ${dataJobs.length}`}</h2>
+          <h2>{`Total de Jobs: ${jobs.length}`}</h2>
+
           <ProgressCard className="card--green">
             <ProgressBar
               color="#2bab51"
-              percentual={Math.round((executed / dataJobs.length) * 100)}
+              percentual={Math.round((executed / jobs.length) * 100)}
             />
             <div>
               <span>{executed}</span>
@@ -73,7 +75,7 @@ const Dashboard: React.FC = () => {
           <ProgressCard className="card--yellow">
             <ProgressBar
               color="#e88e3c"
-              percentual={Math.round((outsideWindow / dataJobs.length) * 100)}
+              percentual={Math.round((outsideWindow / jobs.length) * 100)}
             />
             <div>
               <span>{outsideWindow}</span>
@@ -83,7 +85,7 @@ const Dashboard: React.FC = () => {
           <ProgressCard className="card--red">
             <ProgressBar
               color="#e81760"
-              percentual={Math.round((superiorTime / dataJobs.length) * 100)}
+              percentual={Math.round((superiorTime / jobs.length) * 100)}
             />
             <div>
               <span>{superiorTime}</span>
@@ -92,11 +94,20 @@ const Dashboard: React.FC = () => {
           </ProgressCard>
         </ProgressContent>
         <TableContent>
-          <h2>Filas de execução</h2>
+          <HeaderJobs>
+            <h2>Filas de execução</h2>
+            <div className="window-exec">
+              <span>Janela de execução:</span>
+              <span>{` ${windowExecute.init} até`}</span>
+              <span>{` ${windowExecute.end}`}</span>
+            </div>
+          </HeaderJobs>
           <TablesContainer>
             {queues &&
               queues.length &&
-              queues.map((process: any) => <TableJobs jobs={process} />)}
+              queues.map((process: any, index: number) => (
+                <TableJobs key={index} jobs={process} />
+              ))}
           </TablesContainer>
         </TableContent>
       </Card>

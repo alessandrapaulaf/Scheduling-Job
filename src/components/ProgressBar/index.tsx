@@ -19,7 +19,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ color, percentual }) => {
           />
           <path
             className="circle"
-            stroke-dasharray={`${percentual}, 100`}
+            strokeDasharray={`${percentual}, 100`}
             d="M18 2.0845
           a 15.9155 15.9155 0 0 1 0 31.831
           a 15.9155 15.9155 0 0 1 0 -31.831"

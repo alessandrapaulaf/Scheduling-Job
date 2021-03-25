@@ -27,10 +27,16 @@ const executeJobs = (jobs: any, window: IWindow, timeToExecute: number) => {
   const counterProcess = getCounterProcesses(eligibleJobs, timeToExecute);
 
   // Obtém os jobs de acordo com a quantidade de processos.
+
+  const toConsole = [];
   for (let i = 0; i < counterProcess; i++) {
-    toExecute.push(getExecutionQueue(eligibleJobs, timeToExecute));
+    const result = getExecutionQueue(eligibleJobs, timeToExecute);
+
+    toConsole.push(result.map((job) => job.id));
+    toExecute.push(result);
   }
 
+  console.log(toConsole);
   return toExecute;
 };
 

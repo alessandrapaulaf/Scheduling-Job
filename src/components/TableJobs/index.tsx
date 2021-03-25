@@ -21,8 +21,8 @@ const TableJobs: React.FC<TableProps> = ({ jobs }) => {
       <tbody>
         {jobs &&
           jobs.length &&
-          jobs.map((job) => (
-            <tr>
+          jobs.map((job, index) => (
+            <tr key={index}>
               <td>{job.id}</td>
               <td className="desc">{job.description}</td>
               <td>{job.maxDate.toLocaleString("pt-BR")}</td>
